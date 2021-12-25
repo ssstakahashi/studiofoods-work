@@ -1,0 +1,95 @@
+input[type=checkbox] {
+  transform: scale(2.5);
+}
+
+.container {
+  padding-top: 50px;
+}
+
+.modal {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.6);
+}
+
+.modal-inner {
+  position: absolute;
+  top: 8%;
+  right: 0;
+  left: 0;
+  width: 700px;
+  padding-bottom: 150px;
+  margin: auto;
+  background-color: rgb(255, 255, 255);
+  border-radius: 8px;
+  z-index: 1;
+}
+
+.modal-introduction img {
+  width: 250px;
+  height: 250px;
+  padding: 0 200px;
+  object-fit: contain;
+}
+
+.modal-header {
+  height: 8px;
+  width: 100%;
+  margin-bottom: 60px;
+  border-radius: 8px 8px 0 0;
+  background-image: url("https://s3-ap-northeast-1.amazonaws.com/progate/shared/images/lesson/react/modal_bar.svg");
+}
+
+.modal-introduction h2 {
+  color: #5876a3;
+  width: 500px;
+  text-align: center;
+  margin: auto;
+}
+
+.modal-introduction p {
+  color: #5876a3;
+  width: 400px;
+  line-height: 32px;
+  text-align: center;
+  margin: auto;
+  display:block;
+}
+
+.modal-close-btn {
+  font-size: 13px;
+  color: #8491a5;
+  width: 200px;
+  padding: 16px 0;
+  border: 0;
+  background-color: #f0f4f9;
+  cursor: pointer;
+  position:absolute;
+  bottom:20px;
+  left:250px;
+  right: 250px;
+
+}
+
+.modal-close-btn:hover {
+  color: #8491a5;
+  background-color: #ccd9ea;
+  transition: .3s ease-in-out;
+}
+
+button {
+    margin: 20px 20px;
+    position: relative;
+    left: 350px;
+}
+
+table {
+    margin: 20px;
+}
+
+h2 {
+    text-align: center;
+}
