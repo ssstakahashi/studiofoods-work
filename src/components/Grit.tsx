@@ -1,56 +1,108 @@
-import React, {useState} from 'react';
-import _ from 'lodash';
+import React, { useState } from "react";
 import './Grit.module.css';
-import { Table,TableBody,TableCell,TableContainer,TableHead,TableRow,Paper } from '@mui/material';
+import { Table,TableBody,TableCell,TableContainer,TableHead,TableRow,Paper, Button, Grid } from '@mui/material';
+import {titles} from './Text';
+
+const initialState: number[] = [0,0,0,0,0,0,0,0,0,0]
 
 const Grit: React.FC = () => {
-    const[chose, setChose] = useState(parseInt(0));
-    const[modal, setModal] = useState(true);
+    const answer  = initialState;
+    const [ total,setTotal ] = useState<number>(0);
+    const [ modal, setModal ] = useState<boolean>(true);
+    const handleChange = (e:any) => {
+        let num:number = Number(e.target.name);
+        let val:number = Number(e.target.value); 
+        if (num > 4 ) {
+            val = val + ( 3 - val ) * 2; 
+        }
+        answer.splice( num, 1, val);
+        submitOK()
+    };
+    const submitOK = () => {
+        let sub = modal
+        if ( answer.every( x => x > 0 ) ) {
+            sub = false
+        } 
+        setModal(sub)
+    }
 
-    const handleClickClose = () => {setModal(true)};
-    const reset =(s)=> {setChose(0)};
+    const handleSubmit = () => {
+        let totalNum:number = answer.reduce(
+            ( previousValue:number, currentValue:number ):number => previousValue + currentValue,0 )
+        totalNum = (Math.round(totalNum/10*10) ) / 10
+        setTotal(totalNum)
+    }
+
 
     return (
-    <>
-        <h3>「やり抜く力」をはかるグリット·スケール</h3>
-        <TableContainer component={Paper}>
-        <Table sx={{ minWidth: 650 }} aria-label="simple table">
-            <TableHead>
-            <TableRow>
-                <TableCell>"No."</TableCell>
-                <TableCell align="right">"項目"</TableCell>
-                <TableCell align="right">"完全に当てはまらない"</TableCell>
-                <TableCell align="right">"あまり当てはまらない"</TableCell>
-                <TableCell align="right">"中立"</TableCell>
-                <TableCell align="right">"いくらか当てはまる"</TableCell>
-                <TableCell align="right">"かなり当てはまる"</TableCell>
-            </TableRow>
-            </TableHead>
-            <TableBody>
-            {rows.map((row) => (
-                <TableRow
-                key={row.name}
-                sx={{}}
-                >
-                <TableCell component="th" scope="row">
-                    {row.name}
-                </TableCell>
-                <TableCell align="right">{row.calories}</TableCell>
-                <TableCell align="right">{row.fat}</TableCell>
-                <TableCell align="right">{row.carbs}</TableCell>
-                <TableCell align="right">{row.protein}</TableCell>
-                <TableCell align="right">{row.protein}</TableCell>
-                <TableCell align="right">{row.protein}</TableCell>
-                </TableRow>
-            ))}
-            </TableBody>
-        </Table>
-        </TableContainer>
-            <p>当てはまる箇所の数字にマルをつけていき、合計して10で割った数値があなたのグリット·スコアとなる</p>
-                <button type="button" className="btn btn-outline-secondary btn-lg" onClick={total} >　確　　定　</button>
-                <button type="button" className="btn btn-outline-warning" onClick={reset} >リセット</button>
-            <h2>あたたのグリット・スコアは、{chose/10}点です！！</h2>
-    </>
+    <Grid container direction="column" justifyContent="center" alignItems="center">
+        <Grid item>
+            <h3>「やり抜く力」をはかるグリット·スケール</h3>
+            <p>当てはまる項目にチェックした数値があなたのグリット·スコアとなります</p>
+        </Grid>
+        <Grid item>
+            <Table sx={{ maxWidth: "95%" }}>
+                <TableHead>
+                    <TableRow>
+                        <TableCell align="center">No.</TableCell>
+                        <TableCell align="center"  size="small">項目</TableCell>
+                        <TableCell align="center">完全に<br />当てはまらない</TableCell>
+                        <TableCell align="center">あまり<br />当てはまらない</TableCell>
+                        <TableCell align="center">中立</TableCell>
+                        <TableCell align="center">いくらか<br />当てはまる</TableCell>
+                        <TableCell align="center">かなり<br />当てはまる</TableCell>
+                    </TableRow>
+                </TableHead>
+                <TableBody>
+                {titles.map((row,index) => (
+                    <TableRow key={row.num}>
+                        <TableCell component="th" scope="row"  size="small" align="center">
+                            {row.num}
+                        </TableCell>
+                        <TableCell size="small" align="left">
+                            {row.word}
+                        </TableCell>
+                        <TableCell align="center">
+                            <input type="radio" value={1} name={`${index}`} onChange={(e)=>handleChange(e)} />
+                        </TableCell>
+                        
+                        <TableCell align="center">
+                            <input type="radio" value={2} name={`${index}`} onChange={(e)=>handleChange(e)}/>
+                        </TableCell>
+                        <TableCell align="center">
+                            <input type="radio" value={3} name={`${index}`} onChange={(e)=>handleChange(e)}/>
+                        </TableCell>
+                        <TableCell align="center">
+                            <input type="radio" value={4} name={`${index}`} onChange={(e)=>handleChange(e)}/>
+                        </TableCell>
+                        <TableCell align="center">
+                            <input type="radio" value={5} name={`${index}`} onChange={(e)=>handleChange(e)}/>
+                        </TableCell>
+                    </TableRow>
+                ))}
+                </TableBody>
+            </Table>
+        </Grid>
+        <Grid item>
+            <Grid container direction="row" spacing={6}>
+                <Grid item>
+                    <Button variant="contained" onClick={handleSubmit} disabled={modal} size="large">
+                        　確　　　定　  
+                    </Button>
+                </Grid>
+                <Grid item>
+                    <Button variant="contained" size="large">リセット</Button>
+                </Grid>
+                <Grid item></Grid>
+            </Grid>
+            <Grid container justifyContent="center" alignItems="center">
+                <Grid item>
+                    <h2>あたたのグリット・スコアは、{total}点です！！</h2>
+                </Grid>
+            </Grid>
+
+        </Grid>
+    </Grid>
     )
 }
 export default Grit;

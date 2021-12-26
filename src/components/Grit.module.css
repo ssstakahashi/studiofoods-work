@@ -2,9 +2,6 @@ input[type=checkbox] {
   transform: scale(2.5);
 }
 
-.container {
-  padding-top: 50px;
-}
 
 .modal {
   position: fixed;

@@ -3,7 +3,7 @@ import counterReducer from '../components/Grit';
 
 export const store = configureStore({
   reducer: {
-    counter: counterReducer,
+    // counter: counterReducer,
   },
 });
 
